@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ABTestView">
+        <attr name="mode">
+            <enum name="fix" value="0" />
+            <enum name="flow" value="1" />
+        </attr>
+        <attr name="layoutA" format="reference" />
+        <attr name="layoutB" format="reference" />
+    </declare-styleable>
+</resources>
