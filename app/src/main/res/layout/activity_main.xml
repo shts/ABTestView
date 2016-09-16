@@ -8,19 +8,23 @@
     tools:context=".MainActivity">
 
     <jp.shts.android.library.abtestview.ABTestView
+        android:id="@+id/each"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layoutA="@layout/pattern_a"
         app:layoutB="@layout/pattern_b"
-        app:mode="flow" />
+        app:inflatedId="@+id/inflated_each"
+        app:mode="each" />
 
     <jp.shts.android.library.abtestview.ABTestView
+        android:id="@+id/fix"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layoutA="@layout/pattern_a"
         app:layoutB="@layout/pattern_b"
+        app:inflatedId="@+id/inflated_fix"
         app:mode="fix" />
 
 </LinearLayout>

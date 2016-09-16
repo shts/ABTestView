@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,16 @@ public class ABTestView extends View {
         int B = 11;
     }
 
+    private int inflatedId;
+
     @LayoutRes
     private int aId, bId;
 
+    @Mode
     private int mode = Mode.FLOW;
+
+    @Which
+    private int which = Which.UNKNOWN;
 
     private String unique;
 
@@ -63,16 +70,18 @@ public class ABTestView extends View {
 
         aId = a.getResourceId(R.styleable.ABTestView_layoutA, NO_ID);
         bId = a.getResourceId(R.styleable.ABTestView_layoutB, NO_ID);
+        inflatedId = a.getResourceId(R.styleable.ABTestView_inflatedId, NO_ID);
 
         mode = a.getInteger(R.styleable.ABTestView_mode, Mode.FLOW);
 
         a.recycle();
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        setupView(whichView());
+    @Nullable
+    public View inflate() {
+        View w = whichView();
+        setupView(w);
+        return w;
     }
 
     private void setupView(View view) {
@@ -93,7 +102,9 @@ public class ABTestView extends View {
         if (viewParent != null && viewParent instanceof ViewGroup) {
             @LayoutRes final int w = whichLayout();
             if (w != 0) {
-                return LayoutInflater.from(getContext()).inflate(whichLayout(), (ViewGroup) viewParent, false);
+                View v = LayoutInflater.from(getContext()).inflate(whichLayout(), (ViewGroup) viewParent, false);
+                if (inflatedId != NO_ID) v.setId(inflatedId);
+                return v;
             } else {
                 throw new IllegalArgumentException("ABTestView must have a valid layoutResource");
             }
@@ -102,16 +113,24 @@ public class ABTestView extends View {
         }
     }
 
+    @Which
+    public int getWhich() {
+        if (mode == Mode.FIX) {
+            return Store.get(getContext(), unique);
+        }
+        return which;
+    }
+
     @LayoutRes
     protected int whichLayout() {
         if (mode == Mode.FIX) {
             if (Store.get(getContext(), unique) == Which.UNKNOWN) {
-                final int which = which();
-                Store.set(getContext(), unique, which);
+                Store.set(getContext(), unique, which());
             }
             return Store.get(getContext(), unique) == Which.A ? aId : bId;
         }
-        return which() == Which.A ? aId : bId;
+        which = which();
+        return which == Which.A ? aId : bId;
     }
 
     @Which

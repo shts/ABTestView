@@ -3,9 +3,10 @@
     <declare-styleable name="ABTestView">
         <attr name="mode">
             <enum name="fix" value="0" />
-            <enum name="flow" value="1" />
+            <enum name="each" value="1" />
         </attr>
         <attr name="layoutA" format="reference" />
         <attr name="layoutB" format="reference" />
+        <attr name="inflatedId" format="reference" />
     </declare-styleable>
 </resources>
