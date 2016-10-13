@@ -4,6 +4,8 @@ View for AB test of Android.
 
 [![](https://jitpack.io/v/shts/ABTestView.svg)](https://jitpack.io/#shts/ABTestView)
 
+[![AndroidArsenal](https://img.shields.io/badge/Android%20Arsenal-ABTestView-green.svg?style=true)](https://android-arsenal.com/detail/1/4383)
+
 <img src=https://github.com/shts/ABTestView/blob/master/images/animation.gif width="300" />
 
 <img src=https://github.com/shts/ABTestView/blob/master/images/device-2016-09-16-123716.png width="300" />
